@@ -1,5 +1,14 @@
+export interface TemplateConfig {
+  label: string;
+  hint: string;
+  columns: string[];
+}
 
-import { TemplateConfig } from './types';
+export interface HistoryItem {
+  date: string;
+  text: string;
+  template: string;
+}
 
 export const APP_TITLE = "日报转换助手";
 export const APP_SUBTITLE = "让日报粘贴进飞书多维表格从未如此简单";
@@ -7,7 +16,7 @@ export const APP_SUBTITLE = "让日报粘贴进飞书多维表格从未如此简
 export const TEMPLATES: Record<string, TemplateConfig> = {
   public: {
     label: "公域流量",
-    hint: "短视频/矩阵号投放模版：提取账号状态、剪辑发布及客资。日期会自动统一为 YYYY/MM/DD 格式。",
+    hint: "提取账号状态、剪辑发布及客资。日期统一为 YYYY/MM/DD。",
     columns: [
       "日期", 
       "运营人", 
@@ -23,7 +32,7 @@ export const TEMPLATES: Record<string, TemplateConfig> = {
   },
   private: {
     label: "私域运营",
-    hint: "私域运营模版：根据客资转化路径提取数据。注意：'今日总客资'列将统一填充为0。",
+    hint: "根据客资转化路径提取。'今日总客资'列将尝试从文本汇总提取。",
     columns: [
       "日期", 
       "私域", 
@@ -38,5 +47,10 @@ export const TEMPLATES: Record<string, TemplateConfig> = {
       "客户今日上门/已操作客户", 
       "今日放款客户"
     ]
+  },
+  custom: {
+    label: "✨ 自定义",
+    hint: "手动指定列名，AI 将根据你的定义灵活提取数据。",
+    columns: [] // 动态输入
   }
 };
