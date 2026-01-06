@@ -1,8 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { transformDailyReportStream } from './services/geminiService';
-import { TEMPLATES, APP_TITLE, APP_SUBTITLE } from './constants';
-import { HistoryItem } from './types';
+import { TEMPLATES, APP_TITLE, APP_SUBTITLE, HistoryItem } from './constants';
 import Button from './components/Button';
 
 export default function App() {
@@ -53,6 +51,7 @@ export default function App() {
         setOutputText(fullResult);
       }
 
+      // 自动清理 AI 可能附带的 Markdown 标记
       const cleanResult = fullResult.replace(/```[a-z]*\n/g, '').replace(/```/g, '').trim();
       setOutputText(cleanResult);
 
@@ -125,7 +124,6 @@ export default function App() {
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {/* 输入端 */}
           <div className="group bg-white rounded-[40px] shadow-sm border border-slate-100 p-8 flex flex-col h-[650px] transition-all hover:shadow-2xl hover:border-blue-100">
             <div className="flex justify-between items-center mb-6">
               <div className="flex items-center gap-3">
@@ -142,7 +140,6 @@ export default function App() {
             />
           </div>
 
-          {/* 输出端 */}
           <div className="group bg-slate-900 rounded-[40px] shadow-2xl p-8 flex flex-col h-[650px] relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
             <div className="flex justify-between items-center mb-6 relative z-10">
