@@ -9,7 +9,7 @@ export async function* transformDailyReportStream(
   const apiKey = process.env.API_KEY;
   
   if (!apiKey || apiKey === "undefined") {
-    throw new Error("检测到未配置 API_KEY。请在 Zeabur/Vercel 环境变量中添加 API_KEY 变量。");
+    throw new Error("检测到未配置 API_KEY。请在 Zeabur 环境变量中添加 API_KEY 变量。");
   }
 
   const ai = new GoogleGenAI({ apiKey });
@@ -25,12 +25,13 @@ export async function* transformDailyReportStream(
 目标列顺序（严格按此顺序）：
 ${columns.map((col, i) => `${i + 1}. ${col}`).join('\n')}
 
-执行准则：
-1. 【结构提取】从文本中识别所有人员，每人生成一行数据。
-2. 【智能映射】将“新增”、“客资”、“新线索”等灵活对应到你的目标列。
-3. 【数据清洗】日期必须转为 YYYY/MM/DD。所有数值列若无数据必须填数字 0。
-4. 【纯净输出】仅输出制表符（Tab）分隔的纯文本。禁止输出 Markdown 代码块（如 \`\`\`tsv）、禁止任何开场白或解释。
-5. 【逻辑补全】如果没有提取到某人的某些数据，根据常识补 0。
+执行准则（严禁违反）：
+1. 【格式控制】禁止输出任何 Markdown 代码块标签（如 \`\`\`tsv 或 \`\`\`）。仅输出纯文本。
+2. 【内容提取】从文本中识别所有人员，每人生成一行数据。
+3. 【日期转换】所有日期必须格式化为 YYYY/MM/DD。
+4. 【数值处理】所有数值列若无数据必须填数字 0。
+5. 【分隔符】仅使用制表符（Tab）作为列分隔符。
+6. 【纯净输出】禁止输出任何开场白、解释或结论。
 
 背景规则：${templateHint}
 
